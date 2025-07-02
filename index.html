@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DL4 Calculator</title>
+    <script src="main.js"></script>
+</head>
+<body>
+   <header>
+        <h1>DL4 Calculator</h1>
+    </header>
+    <main>
+        <label for="brusatori-mat-no">Brusatori Mat. No.</label>
+        <input type="text" id="brusatori-mat-no" name="brusatori-mat-no"><br>
+        <div id="checkboxes-container" style="display:none; margin-top:10px;">
+            <span style="display:inline-block; width:180px;">Configurable Options:</span><br>
+            <label><input type="checkbox" id="withfeatherkey" value="shaft with feather key"> Shaft with feather key</label><br>
+            <label><input type="checkbox" id="withbrake" value="with brake"> With brake</label><br>
+            <label>
+                Encoder:
+                <select id="encoder">
+                    <option value="No encoder">No Encoder</option>
+                    <option value="resolver">Resolver</option>
+                    <option value="SRS50">SRS50</option>
+                    <option value="SRM50">SRM50</option>
+                </select>
+            </label><br>
+             <label>
+                Additional Options:
+                <select id="additionaloptions">
+                    <option value="Without">Without</option>
+                    <option value="IP65">IP65</option>
+                    <option value="IM B35">IM B35</option>
+                    <option value="IP65/IM B35">IP65/IM B35</option>
+                    <option value="Special Shaft">Special Shaft</option>
+                    <option value="IP65/Special Shaft">IP65/Special Shaft</option>
+                    <option value="IM B35/Special Shaft">IM B35/Special Shaft</option>
+                    <option value="IP65/IM B35/Special Shaft">IP65/IM B35/Special Shaft</option>
+                </select>
+            </label><br>
+        </div>
+        <br>
+        <label style="display:inline-block; width:180px;">Identifier:</label>
+        <span id="code-result"></span><br>
+        <label style="display:inline-block; width:180px;">Rated Material Number:</label>
+        <span id="rated-matno-result"></span><br>
+        <label style="display:inline-block; width:180px;">CMAT Type Code:</label>
+        <span id="cmat-type-code-result"></span><br>
+        <label style="display:inline-block; width:180px;">Configurable Options:</label>
+        <span id="configurable-options-result"></span>
+    </main>
+    <script>
+        const input = document.getElementById('brusatori-mat-no');
+        const resultDiv = document.getElementById('code-result');
+        const ratedMatNoDiv = document.getElementById('rated-matno-result');
+        const cmatTypeCodeDiv = document.getElementById('cmat-type-code-result');
+        const configurableOptionsDiv = document.getElementById('configurable-options-result');
+        const checkboxesContainer = document.getElementById('checkboxes-container');
+        const withfeatherkey = document.getElementById('withfeatherkey');
+        const withbrake = document.getElementById('withbrake');
+        const encoder = document.getElementById('encoder');
+        const additionaloptions = document.getElementById('additionaloptions');
+
+        function updateOutputs() {
+            const matNo = input.value;
+            const identifier = getIdentifier(matNo);
+
+            // Show checkboxes if input is not empty
+            checkboxesContainer.style.display = matNo ? "block" : "none";
+
+            if (identifier === "NOT VALID") {
+                resultDiv.textContent = "NOT VALID";
+                ratedMatNoDiv.textContent = "";
+                cmatTypeCodeDiv.textContent = "";
+                configurableOptionsDiv.textContent = "";
+            } else {
+                resultDiv.textContent = identifier;
+                ratedMatNoDiv.textContent = getRatedMaterialNumber(matNo);
+                cmatTypeCodeDiv.textContent = "00SM000-CMAT";
+                configurableOptionsDiv.textContent = getConfigurableOptions(withfeatherkey, withbrake, encoder,additionaloptions);
+            }
+        }
+
+        input.addEventListener('input', updateOutputs);
+        withfeatherkey.addEventListener('change', updateOutputs);
+        withbrake.addEventListener('change', updateOutputs);
+        encoder.addEventListener('change', updateOutputs);
+        additionaloptions.addEventListener('change', updateOutputs);
+    </script>
+</body>
+</html>
