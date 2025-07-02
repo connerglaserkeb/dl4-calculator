@@ -84,7 +84,7 @@ function getCode5(matNo) {
     }
 }
 
-function getRatedMaterialNumber(matNo) {
+function getRatedMaterialNumberBrusatori(matNo) {
     if (!matNo) return "";
     // Remove the first occurrence of a single quote
     const cleaned = matNo.replace("'", "");
@@ -96,6 +96,15 @@ function getRatedMaterialNumber(matNo) {
     const m9Char = m9.length > 1 ? m9.charAt(1) : "";
     if (!m10Char || !m9Char) return "";
     return `CMSM4${m10Char}${m9Char}-xxxx`;
+}
+
+function getRatedMaterialNumberKEB(kebSize, kebLength) {
+    if (!kebSize || !kebLength) return "";
+    // Get the second character of each input (index 1)
+    const sizeChar = kebSize.length > 1 ? kebSize.charAt(1) : "";
+    const lengthChar = kebLength.length > 1 ? kebLength.charAt(1) : "";
+    if (!sizeChar || !lengthChar) return "";
+    return `CMSM4${lengthChar}${sizeChar}-xxxx`;
 }
 
 function getIdentifierBrusatori(matNo) {

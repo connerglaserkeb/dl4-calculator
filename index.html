@@ -9,127 +9,221 @@
     <style>
         :root {
             --main-font: 'Segoe UI', Arial, sans-serif;
-            --main-bg: #222;
-            --main-text: #fff;
+            --main-bg: #181A1B;
+            --main-text: #F3F4F6;
+            --accent: #dd0067;
+            --card-bg: #23272a;
+            --input-bg: #23272a;
+            --input-border: #393e46;
+            --input-focus: #dd0067;
+            --border-radius: 12px;
+            --shadow: 0 4px 24px 0 rgba(0,0,0,0.12);
         }
-        html, body, input, select, label, span, h1, h2, h3, h4, h5, h6 {
+        html, body {
             font-family: var(--main-font);
             background: var(--main-bg);
             color: var(--main-text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        header {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            padding: 24px 32px;
+            margin-bottom: 32px;
+        }
+        .header-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-title {
+            font-size: 2.0rem;
+            font-weight: bold;
+            color: var(--accent);
+            letter-spacing: 0px;
+        }
+        .header-actions button {
+            margin-left: 12px;
+        }
+        main, aside {
+            background: var(--card-bg);
+            color: var(--main-text);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 32px 24px;
+            margin: 0 16px 32px 16px;
+            flex: 1 1 0;
+            min-width: 350px;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+        main {
+            flex: 2 1 0;
+        }
+        aside {
+            flex: 1 1 0;
+            border-left: 2px solid #23272a;
+            min-width: 320px;
+        }
+        .container-flex {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            margin-top: 0px;
+            color: var(--accent);
+            font-weight: bold;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 18px 0 6px;
+            font-weight: 500;
+            color: #bdbdbd;
+        }
+        input[type="text"], select {
+            padding: 10px 14px;
+            margin-bottom: 0px;
+            background: var(--input-bg);
+            color: var(--main-text);
+            border: 2px solid var(--input-border);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border 0.2s;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus, select:focus {
+            border-color: var(--input-focus);
+            outline: none;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-left: 0;
+            margin-bottom: 10px;
+            font-weight: 400;
+            color: var(--main-text);
+        }
+        .checkbox-group input[type="checkbox"] {
+            accent-color: var(--accent);
+            margin-right: 10px;
+        }
+        .option-group {
+            margin-left: 30px;
         }
         button {
             font-family: var(--main-font);
             font-weight: bold;
-            color: #dd0067;
-            background: #333;
-            border: 3px solid #555;
+            color: var(--accent);
+            background: #23272a;
+            border: 2px solid var(--accent);
+            border-radius: var(--border-radius);
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
         }
-        input, select {
-            background: #333;
+        button:hover, button:focus {
+            background: var(--accent);
             color: #fff;
-            border: 3px solid #555;
         }
-        main, aside {
-            background: var(--main-bg);
-            color: var(--main-text);
-        }
-        header {
-            background: #444;
-            padding: 0px 0;
-            text-align: center;
-            
-        }
-        h1 {
-            margin: 0;
-            font-size: 30px;
-        }
-        h2 {
-            font-size: 25px;
-            border-bottom: 0px solid #555;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-        }
-        label {
+        .result-label {
             display: inline-block;
-            margin: 10px 0 5px;
+            width: 180px;
+            color: #bdbdbd;
+            font-weight: 500;
         }
-        span {
+        .result-value {
             display: inline-block;
             min-width: 180px;
+            color: var(--main-text);
+            font-weight: 600;
         }
-        button {
-            cursor: pointer;
-            padding: 10px 15px;
-            margin: 10px 10px;
+        @media (max-width: 900px) {
+            .container-flex {
+                flex-direction: column;
+                gap: 0;
+            }
+            main, aside {
+                margin: 16px;
+            }
         }
-        /* Add any additional custom styles here */
     </style>
 </head>
 <body>
-   <header>
-        <h1 style="display: flex; align-items: center; justify-content: space-between; ">
-            <span style="font-size: 40px; color: #dd0067; ">DL4 Calculator</span>
-            <span>
+    <header>
+        <div class="header-flex">
+            <span class="header-title">KEB DL4 Part Number Calculator</span>
+            <span class="header-actions">
                 <button onclick="window.open('https://data.keb.de//securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE0NzYxMTgsImV4cCI6MTc1MTU2NjExOCwidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW5cL21lZGlhXC9DYXRhbG9nc1wvZ21cL2N0X2dtXzAwMDAwMDA1ZGw0X2VuLnBkZiIsInBhZ2UiOjF9.9OXAV_O74L9XlZ90TR9ICBdxdzmwEsdpD3kk91lN2HY/ct_gm_00000005dl4_en.pdf', '_blank');">Open KEB DL4 catalog</button>
                 <button onclick="window.open('https://data.keb.de//securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE0NzYxMTgsImV4cCI6MTc1MTU2NjExOCwidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW5cL21lZGlhXC9NYW51YWxzXC9nbVwvbWFfZ21fZGw0LWluc3QtMjAyMjA2MjlfZW4ucGRmIiwicGFnZSI6MX0.4xUIvWq3IsEGoT5pndPYoYfj9NTsvKEc_-oduHYYBJo/ma_gm_dl4-inst-20220629_en.pdf', '_blank');">Open KEB DL4 manual</button>
             </span>
-        </h1>
-   </header>
-   <div style="display: flex; align-items: flex-start;">
-        <main style="flex: 1 1 0; min-width: 0;">
+        </div>
+    </header>
+    <div class="container-flex">
+        <main>
             <h2>Brusatori Input</h2>
             <label for="brusatori-identifier">Brusatori Identifier:</label>
-            <input type="text" id="brusatori-identifier" name="brusatori-identifier">
-            <label for="brusatori-identifier">ex. 071154</label><br>
+            <input type="text" id="brusatori-identifier" name="brusatori-identifier" placeholder="ex. 071154" value="071104", style="display: block; margin-left: auto; margin-right: auto; text-align: center; width: 60%;">
             <div id="brusatori-checkboxes-container" style="display:none; margin-top:10px;">
-                <span style="display:inline-block; width:180px;">Configurable Options:</span><br>
-                <label style="margin-left: 30px"><input type="checkbox" id="brusatori-withfeatherkey" value="shaft with feather key"> Shaft with feather key</label><br>
-                <label style="margin-left: 30px"><input type="checkbox" id="brusatori-withbrake" value="with brake"> With brake</label><br>
-                <label style="margin-left: 30px">
-                    Encoder:
-                    <select id="brusatori-encoder">
-                        <option value="No encoder">No Encoder</option>
-                        <option value="resolver">Resolver</option>
-                        <option value="SRS50">SRS50</option>
-                        <option value="SRM50">SRM50</option>
-                    </select>
-                </label><br>
-                <label style="margin-left: 30px">
-                    Additional Options:
-                    <select id="brusatori-additionaloptions">
-                        <option value="Without">Without</option>
-                        <option value="IP65">IP65</option>
-                        <option value="IM B35">IM B35</option>
-                        <option value="IP65/IM B35">IP65/IM B35</option>
-                        <option value="Special Shaft">Special Shaft</option>
-                        <option value="IP65/Special Shaft">IP65/Special Shaft</option>
-                        <option value="IM B35/Special Shaft">IM B35/Special Shaft</option>
-                        <option value="IP65/IM B35/Special Shaft">IP65/IM B35/Special Shaft</option>
-                    </select>
-                </label><br>
+                <span style="display:inline-block; width:180px; color:#bdbdbd; font-weight:500;">Configurable Options:</span><br>
+                <div class="checkbox-group option-group">
+                    <label><input type="checkbox" id="brusatori-withfeatherkey" value="shaft with feather key"> Shaft with feather key</label>
+                    <label><input type="checkbox" id="brusatori-withbrake" value="with brake"> With brake</label>
+                    <label>
+                        Encoder:
+                        <select id="brusatori-encoder" style="margin-top: 15px; margin-left: 30px;">
+                            <option value="No encoder">No Encoder</option>
+                            <option value="resolver">Resolver</option>
+                            <option value="SRS50">SRS50</option>
+                            <option value="SRM50">SRM50</option>
+                        </select>
+                    </label>
+                    <label>
+                        Additional Options:
+                        <select id="brusatori-additionaloptions" style="margin-top: 15px; margin-left: 30px;">
+                            <option value="Without">Without</option>
+                            <option value="IP65">IP65</option>
+                            <option value="IM B35">IM B35</option>
+                            <option value="IP65/IM B35">IP65/IM B35</option>
+                            <option value="Special Shaft">Special Shaft</option>
+                            <option value="IP65/Special Shaft">IP65/Special Shaft</option>
+                            <option value="IM B35/Special Shaft">IM B35/Special Shaft</option>
+                            <option value="IP65/IM B35/Special Shaft">IP65/IM B35/Special Shaft</option>
+                        </select>
+                    </label>
+                </div>
             </div>
             <br>
-            <label style="display:inline-block; width:180px;">Identifier:</label>
-            <span id="brusatori-code-result"></span><br>
-            <label style="display:inline-block; width:180px;">Rated Material Number:</label>
-            <span id="brusatori-rated-matno-result"></span><br>
-            <label style="display:inline-block; width:180px;">CMAT Type Code:</label>
-            <span id="brusatori-cmat-type-code-result"></span><br>
-            <label style="display:inline-block; width:180px;">Configurable Options:</label>
-            <span id="brusatori-configurable-options-result"></span>
+            <label class="result-label">Identifier:</label>
+            <span class="result-value" id="brusatori-code-result"></span><br>
+            <label class="result-label">Rated Material Number:</label>
+            <span class="result-value" id="brusatori-rated-matno-result"></span><br>
+            <label class="result-label">CMAT Type Code:</label>
+            <span class="result-value" id="brusatori-cmat-type-code-result"></span><br>
+            <label class="result-label">Configurable Options:</label>
+            <span class="result-value" id="brusatori-configurable-options-result"></span>
         </main>
-        <aside style="flex: 1 1 0; min-width: 0; border-left: 0px solid #ccc; padding-left: 20px;">
+        <aside>
             <h2>KEB Input</h2>
             <label for="keb-identifier">KEB Identifier:</label>
-                <select id = "keb-input-model"> 
+            <div class="keb-input-row" style="display: flex; justify-content: center; gap: 5px;">
+                <select id="keb-input-model" style="margin-left: 0;">
                     <option value="V4">V4</option>
                 </select>
-                <select id = "keb-input-size">    
+                <select id="keb-input-size">
                     <option value="SE">SE</option>
                     <option value="SF">SF</option>
                     <option value="SG">SG</option>
                 </select>
-                <select id = "keb-input-length">    
+                <select id="keb-input-length">
                     <option value="L1">L1</option>
                     <option value="L2">L2</option>
                     <option value="L3">L3</option>
@@ -139,57 +233,57 @@
                     <option value="L7">L7</option>
                     <option value="L8">L8</option>
                 </select>
-                <select id = "keb-input-cooling">    
+                <select id="keb-input-cooling">
                     <option value="CS">CS</option>
                     <option value="CF">CF</option>
                     <option value="LC">LC</option>
                 </select>
-                <select id = "keb-input-speed">    
+                <select id="keb-input-speed">
                     <option value="SP10">SP10</option>
                     <option value="SP15">SP15</option>
                     <option value="SP20">SP20</option>
-                    <option value="SP30">SP28</option>
+                    <option value="SP28">SP28</option>
                     <option value="SP30">SP30</option>
                 </select>
-                
-            <!-- <input type="text" id="keb-identifier" name="keb-identifier" list="keb-identifier-suggestions"> -->
-            <!-- <datalist id="keb-identifier-suggestions"></datalist> -->
+            </div>
             <div id="keb-checkboxes-container" style="display:none; margin-top:10px;">
-                <span style="display:inline-block; width:180px;">Configurable Options:</span><br>
-                <label style="margin-left: 30px"><input type="checkbox" id="keb-withfeatherkey" value="shaft with feather key"> Shaft with feather key</label><br>
-                <label style="margin-left: 30px"><input type="checkbox" id="keb-withbrake" value="with brake"> With brake</label><br>
-                <label style="margin-left: 30px">
-                    Encoder:
-                    <select id="keb-encoder">
-                        <option value="No encoder">No Encoder</option>
-                        <option value="resolver">Resolver</option>
-                        <option value="SRS50">SRS50</option>
-                        <option value="SRM50">SRM50</option>
-                    </select>
-                </label><br>
-                <label style="margin-left: 30px">
-                    Additional Options:
-                    <select id="keb-additionaloptions">
-                        <option value="Without">Without</option>
-                        <option value="IP65">IP65</option>
-                        <option value="IM B35">IM B35</option>
-                        <option value="IP65/IM B35">IP65/IM B35</option>
-                        <option value="Special Shaft">Special Shaft</option>
-                        <option value="IP65/Special Shaft">IP65/Special Shaft</option>
-                        <option value="IM B35/Special Shaft">IM B35/Special Shaft</option>
-                        <option value="IP65/IM B35/Special Shaft">IP65/IM B35/Special Shaft</option>
-                    </select>
-                </label><br>
+                <span style="display:inline-block; width:180px; color:#bdbdbd; font-weight:500;">Configurable Options:</span><br>
+                <div class="checkbox-group option-group">
+                    <label><input type="checkbox" id="keb-withfeatherkey" value="shaft with feather key"> Shaft with feather key</label>
+                    <label><input type="checkbox" id="keb-withbrake" value="with brake"> With brake</label>
+                    <label>
+                        Encoder:
+                        <select id="keb-encoder" style="margin-top: 15px; margin-left: 30px;">
+                            <option value="No encoder">No Encoder</option>
+                            <option value="resolver">Resolver</option>
+                            <option value="SRS50">SRS50</option>
+                            <option value="SRM50">SRM50</option>
+                        </select>
+                    </label>
+                    <label>
+                        Additional Options:
+                        <select id="keb-additionaloptions" style="margin-top: 15px; margin-left: 30px;">
+                            <option value="Without">Without</option>
+                            <option value="IP65">IP65</option>
+                            <option value="IM B35">IM B35</option>
+                            <option value="IP65/IM B35">IP65/IM B35</option>
+                            <option value="Special Shaft">Special Shaft</option>
+                            <option value="IP65/Special Shaft">IP65/Special Shaft</option>
+                            <option value="IM B35/Special Shaft">IM B35/Special Shaft</option>
+                            <option value="IP65/IM B35/Special Shaft">IP65/IM B35/Special Shaft</option>
+                        </select>
+                    </label>
+                </div>
             </div>
             <br>
-            <label style="display:inline-block; width:180px;">Identifier:</label>
-            <span id="keb-code-result"></span><br>
-            <label style="display:inline-block; width:180px;">Rated Material Number:</label>
-            <span id="keb-rated-matno-result"></span><br>
-            <label style="display:inline-block; width:180px;">CMAT Type Code:</label>
-            <span id="keb-cmat-type-code-result"></span><br>
-            <label style="display:inline-block; width:180px;">Configurable Options:</label>
-            <span id="keb-configurable-options-result"></span>
+            <label class="result-label">Identifier:</label>
+            <span class="result-value" id="keb-code-result"></span><br>
+            <label class="result-label">Rated Material Number:</label>
+            <span class="result-value" id="keb-rated-matno-result"></span><br>
+            <label class="result-label">CMAT Type Code:</label>
+            <span class="result-value" id="keb-cmat-type-code-result"></span><br>
+            <label class="result-label">Configurable Options:</label>
+            <span class="result-value" id="keb-configurable-options-result"></span>
         </aside>
     </div>
     <script>
@@ -219,7 +313,7 @@
             brusatoriConfigurableOptionsDiv.textContent = "";
         } else {
             brusatoriResultDiv.textContent = identifier;
-            brusatoriRatedMatNoDiv.textContent = getRatedMaterialNumber(matNo);
+            brusatoriRatedMatNoDiv.textContent = getRatedMaterialNumberBrusatori(matNo);
             brusatoriCmatTypeCodeDiv.textContent = "00SM000-CMAT";
             brusatoriConfigurableOptionsDiv.textContent = getConfigurableOptions(
                 "brusatori",
@@ -274,7 +368,7 @@
             kebConfigurableOptionsDiv.textContent = "";
         } else {
             kebResultDiv.textContent = identifier;
-            kebRatedMatNoDiv.textContent = getRatedMaterialNumber(identifier);
+            kebRatedMatNoDiv.textContent = getRatedMaterialNumberKEB(kebSize.value,kebLength.value,);
             kebCmatTypeCodeDiv.textContent = "00SM000-CMAT";
             kebConfigurableOptionsDiv.textContent = getConfigurableOptions(
                 "keb",
@@ -300,6 +394,7 @@
     window.addEventListener('DOMContentLoaded', function() {
         // ...existing code...
         updateKebOutputs();
+        updateBrusatoriOutputs();
     });
 //     // Add this function to load and parse the CSV, and update the datalist
 // function loadKebSuggestions() {
