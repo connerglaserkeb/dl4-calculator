@@ -69,10 +69,18 @@
         }
         .container-flex {
             display: flex;
+            flex-direction: row;
             align-items: flex-start;
             gap: 32px;
             max-width: 1200px;
             margin: 0 auto;
+        }
+        /* Swap the order of main and aside */
+        .container-flex > main {
+            order: 2;
+        }
+        .container-flex > aside {
+            order: 1;
         }
         h2 {
             font-size: 1.5rem;
@@ -146,6 +154,18 @@
             color: var(--main-text);
             font-weight: 600;
         }
+        .brusatori-title {
+            color: #698fff !important; /* Royal Blue */
+        }
+        .header-actions .brusatori-btn {
+            color: #698fff !important;
+            border-color: #698fff !important;
+        }
+        .header-actions .brusatori-btn:hover,
+        .header-actions .brusatori-btn:focus {
+            background: #698fff !important;
+            color: #fff !important;
+        }
         @media (max-width: 900px) {
             .container-flex {
                 flex-direction: column;
@@ -164,12 +184,13 @@
             <span class="header-actions">
                 <button onclick="window.open('https://data.keb.de//securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE0NzYxMTgsImV4cCI6MTc1MTU2NjExOCwidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW5cL21lZGlhXC9DYXRhbG9nc1wvZ21cL2N0X2dtXzAwMDAwMDA1ZGw0X2VuLnBkZiIsInBhZ2UiOjF9.9OXAV_O74L9XlZ90TR9ICBdxdzmwEsdpD3kk91lN2HY/ct_gm_00000005dl4_en.pdf', '_blank');">Open KEB DL4 catalog</button>
                 <button onclick="window.open('https://data.keb.de//securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE0NzYxMTgsImV4cCI6MTc1MTU2NjExOCwidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW5cL21lZGlhXC9NYW51YWxzXC9nbVwvbWFfZ21fZGw0LWluc3QtMjAyMjA2MjlfZW4ucGRmIiwicGFnZSI6MX0.4xUIvWq3IsEGoT5pndPYoYfj9NTsvKEc_-oduHYYBJo/ma_gm_dl4-inst-20220629_en.pdf', '_blank');">Open KEB DL4 manual</button>
+                <button class="brusatori-btn" onclick="window.open('brusatoricatalog.pdf', '_blank');">Open Brusatori Catalog</button>
             </span>
         </div>
     </header>
     <div class="container-flex">
         <main>
-            <h2>Brusatori Input</h2>
+            <h2 class="brusatori-title">Brusatori Input</h2>
             <label for="brusatori-identifier">Brusatori Identifier:</label>
             <input type="text" id="brusatori-identifier" name="brusatori-identifier" placeholder="ex. 071154" value="071104", style="display: block; margin-left: auto; margin-right: auto; text-align: center; width: 60%;">
             <div id="brusatori-checkboxes-container" style="display:none; margin-top:10px;">
