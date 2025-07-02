@@ -64,7 +64,7 @@ function getCode4(matNo) {
         case "20":
             return "SP20";
         case "28":
-            return "SP28";
+            return "SP30";
         case "30":
             return "SP30";
         default:
@@ -98,7 +98,7 @@ function getRatedMaterialNumber(matNo) {
     return `CMSM4${m10Char}${m9Char}-xxxx`;
 }
 
-function getIdentifier(matNo) {
+function getIdentifierBrusatori(matNo) {
     const code1 = getCode1(matNo);
     const code2 = getCode2(matNo);
     const code3 = getCode3(matNo);
@@ -109,11 +109,46 @@ function getIdentifier(matNo) {
     }
     return [code5, code2, code3, code1, code4].join(" ");
 }
+// function getIdentifierKEB(matNo) {
+//     if (!matNo) return "NOT VALID";
+//     let chunks;
+//     // If matNo contains spaces, dashes, or underscores, split on those
+//     if (/[\s\-_]/.test(matNo)) {
+//         chunks = matNo.trim().split(/[\s\-_]+/);
+//     } else {
+//         // No delimiters: use fixed lengths [2,2,2,2,4]
+//         if (matNo.length < 12) return "NOT VALID";
+//         chunks = [
+//             matNo.substr(0, 2),
+//             matNo.substr(2, 2),
+//             matNo.substr(4, 2),
+//             matNo.substr(6, 2),
+//             matNo.substr(8, 4)
+//         ];
+//     }
+//     if (chunks.length < 5 || chunks.some(c => !c)) {
+//         return "NOT VALID";
+//     }
+//     // Return the identifier in the same order as entered
+//     return chunks.slice(0, 5).join(" ");
+// }
 
-function getConfigurableOptions(withfeatherkey, withbrake, encoder, additionaloptions) {
+function getIdentifierKEB(model, size, length, cooling, speed) { //for individual inputs
+    if (!model || !size || !length || !cooling || !speed) {
+        return "NOT VALID";
+    }
+    return [model, size, length, cooling, speed].join(" ");
+}
+
+function getConfigurableOptions(inputtype,withfeatherkey, withbrake, encoder, additionaloptions) {
     const options = [];
+    let identifiervalue = "";
     // Get the value of the identifier output from index.html and remove spaces
-    let identifierValue = document.getElementById('code-result').textContent || "";
+    if(inputtype === "keb") {
+        identifierValue = document.getElementById('keb-code-result').textContent || "";
+    } else {
+        identifierValue = document.getElementById('brusatori-code-result').textContent || "";
+    }
     identifierValue = identifierValue.replace(/\s+/g, "");
     options.push(identifierValue);
     options.push("-");

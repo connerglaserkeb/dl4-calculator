@@ -5,88 +5,268 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DL4 Calculator</title>
     <script src="main.js"></script>
+    <style>
+        :root {
+            --main-font: 'Segoe UI', Arial, sans-serif;
+        }
+        html, body, input, select, button, label, span, h1, h2, h3, h4, h5, h6 {
+            font-family: var(--main-font);
+        }
+    </style>
 </head>
 <body>
    <header>
         <h1>DL4 Calculator</h1>
-    </header>
-    <main>
-        <label for="brusatori-mat-no">Brusatori Mat. No.</label>
-        <input type="text" id="brusatori-mat-no" name="brusatori-mat-no"><br>
-        <div id="checkboxes-container" style="display:none; margin-top:10px;">
-            <span style="display:inline-block; width:180px;">Configurable Options:</span><br>
-            <label><input type="checkbox" id="withfeatherkey" value="shaft with feather key"> Shaft with feather key</label><br>
-            <label><input type="checkbox" id="withbrake" value="with brake"> With brake</label><br>
-            <label>
-                Encoder:
-                <select id="encoder">
-                    <option value="No encoder">No Encoder</option>
-                    <option value="resolver">Resolver</option>
-                    <option value="SRS50">SRS50</option>
-                    <option value="SRM50">SRM50</option>
+   </header>
+   <button onclick="window.open('https://data.keb.de//securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE0NzYxMTgsImV4cCI6MTc1MTU2NjExOCwidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW5cL21lZGlhXC9DYXRhbG9nc1wvZ21cL2N0X2dtXzAwMDAwMDA1ZGw0X2VuLnBkZiIsInBhZ2UiOjF9.9OXAV_O74L9XlZ90TR9ICBdxdzmwEsdpD3kk91lN2HY/ct_gm_00000005dl4_en.pdf', '_blank');">Open KEB DL4 catalog</button>
+   <button onclick="window.open('https://data.keb.de//securedl/sdl-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NTE0NzYxMTgsImV4cCI6MTc1MTU2NjExOCwidXNlciI6MCwiZ3JvdXBzIjpbMCwtMV0sImZpbGUiOiJmaWxlYWRtaW5cL21lZGlhXC9NYW51YWxzXC9nbVwvbWFfZ21fZGw0LWluc3QtMjAyMjA2MjlfZW4ucGRmIiwicGFnZSI6MX0.4xUIvWq3IsEGoT5pndPYoYfj9NTsvKEc_-oduHYYBJo/ma_gm_dl4-inst-20220629_en.pdf', '_blank');">Open KEB DL4 manual</button><br> 
+   <div style="display: flex; align-items: flex-start;">
+        <main style="flex: 1 1 0; min-width: 0;">
+            <h2>Brusatori Input</h2>
+            <label for="brusatori-identifier">Brusatori Identifier:</label>
+            <input type="text" id="brusatori-identifier" name="brusatori-identifier">
+            <label for="brusatori-identifier">ex. 071154</label><br>
+            <div id="brusatori-checkboxes-container" style="display:none; margin-top:10px;">
+                <span style="display:inline-block; width:180px;">Configurable Options:</span><br>
+                <label><input type="checkbox" id="brusatori-withfeatherkey" value="shaft with feather key"> Shaft with feather key</label><br>
+                <label><input type="checkbox" id="brusatori-withbrake" value="with brake"> With brake</label><br>
+                <label>
+                    Encoder:
+                    <select id="brusatori-encoder">
+                        <option value="No encoder">No Encoder</option>
+                        <option value="resolver">Resolver</option>
+                        <option value="SRS50">SRS50</option>
+                        <option value="SRM50">SRM50</option>
+                    </select>
+                </label><br>
+                <label>
+                    Additional Options:
+                    <select id="brusatori-additionaloptions">
+                        <option value="Without">Without</option>
+                        <option value="IP65">IP65</option>
+                        <option value="IM B35">IM B35</option>
+                        <option value="IP65/IM B35">IP65/IM B35</option>
+                        <option value="Special Shaft">Special Shaft</option>
+                        <option value="IP65/Special Shaft">IP65/Special Shaft</option>
+                        <option value="IM B35/Special Shaft">IM B35/Special Shaft</option>
+                        <option value="IP65/IM B35/Special Shaft">IP65/IM B35/Special Shaft</option>
+                    </select>
+                </label><br>
+            </div>
+            <br>
+            <label style="display:inline-block; width:180px;">Identifier:</label>
+            <span id="brusatori-code-result"></span><br>
+            <label style="display:inline-block; width:180px;">Rated Material Number:</label>
+            <span id="brusatori-rated-matno-result"></span><br>
+            <label style="display:inline-block; width:180px;">CMAT Type Code:</label>
+            <span id="brusatori-cmat-type-code-result"></span><br>
+            <label style="display:inline-block; width:180px;">Configurable Options:</label>
+            <span id="brusatori-configurable-options-result"></span>
+        </main>
+        <aside style="flex: 1 1 0; min-width: 0; border-left: 1px solid #ccc; padding-left: 20px;">
+            <h2>KEB Input</h2>
+            <label for="keb-identifier">KEB Identifier:</label>
+                <select id = "keb-input-model">    
+                    <option value="V4">V4</option>
                 </select>
-            </label><br>
-             <label>
-                Additional Options:
-                <select id="additionaloptions">
-                    <option value="Without">Without</option>
-                    <option value="IP65">IP65</option>
-                    <option value="IM B35">IM B35</option>
-                    <option value="IP65/IM B35">IP65/IM B35</option>
-                    <option value="Special Shaft">Special Shaft</option>
-                    <option value="IP65/Special Shaft">IP65/Special Shaft</option>
-                    <option value="IM B35/Special Shaft">IM B35/Special Shaft</option>
-                    <option value="IP65/IM B35/Special Shaft">IP65/IM B35/Special Shaft</option>
+                <select id = "keb-input-size">    
+                    <option value="SE">SE</option>
+                    <option value="SF">SF</option>
+                    <option value="SG">SG</option>
                 </select>
-            </label><br>
-        </div>
-        <br>
-        <label style="display:inline-block; width:180px;">Identifier:</label>
-        <span id="code-result"></span><br>
-        <label style="display:inline-block; width:180px;">Rated Material Number:</label>
-        <span id="rated-matno-result"></span><br>
-        <label style="display:inline-block; width:180px;">CMAT Type Code:</label>
-        <span id="cmat-type-code-result"></span><br>
-        <label style="display:inline-block; width:180px;">Configurable Options:</label>
-        <span id="configurable-options-result"></span>
-    </main>
+                <select id = "keb-input-length">    
+                    <option value="L1">L1</option>
+                    <option value="L2">L2</option>
+                    <option value="L3">L3</option>
+                    <option value="L4">L4</option>
+                    <option value="L5">L5</option>
+                    <option value="L6">L6</option>
+                    <option value="L7">L7</option>
+                    <option value="L8">L8</option>
+                </select>
+                <select id = "keb-input-cooling">    
+                    <option value="CS">CS</option>
+                    <option value="CF">CF</option>
+                    <option value="LC">LC</option>
+                </select>
+                <select id = "keb-input-speed">    
+                    <option value="SP10">SP10</option>
+                    <option value="SP15">SP15</option>
+                    <option value="SP20">SP20</option>
+                    <option value="SP30">SP28</option>
+                    <option value="SP30">SP30</option>
+                </select>
+                
+            <!-- <input type="text" id="keb-identifier" name="keb-identifier" list="keb-identifier-suggestions"> --><br>
+            <datalist id="keb-identifier-suggestions"></datalist>
+            <div id="keb-checkboxes-container" style="display:none; margin-top:10px;">
+                <span style="display:inline-block; width:180px;">Configurable Options:</span><br>
+                <label><input type="checkbox" id="keb-withfeatherkey" value="shaft with feather key"> Shaft with feather key</label><br>
+                <label><input type="checkbox" id="keb-withbrake" value="with brake"> With brake</label><br>
+                <label>
+                    Encoder:
+                    <select id="keb-encoder">
+                        <option value="No encoder">No Encoder</option>
+                        <option value="resolver">Resolver</option>
+                        <option value="SRS50">SRS50</option>
+                        <option value="SRM50">SRM50</option>
+                    </select>
+                </label><br>
+                <label>
+                    Additional Options:
+                    <select id="keb-additionaloptions">
+                        <option value="Without">Without</option>
+                        <option value="IP65">IP65</option>
+                        <option value="IM B35">IM B35</option>
+                        <option value="IP65/IM B35">IP65/IM B35</option>
+                        <option value="Special Shaft">Special Shaft</option>
+                        <option value="IP65/Special Shaft">IP65/Special Shaft</option>
+                        <option value="IM B35/Special Shaft">IM B35/Special Shaft</option>
+                        <option value="IP65/IM B35/Special Shaft">IP65/IM B35/Special Shaft</option>
+                    </select>
+                </label><br>
+            </div>
+            <br>
+            <label style="display:inline-block; width:180px;">Identifier:</label>
+            <span id="keb-code-result"></span><br>
+            <label style="display:inline-block; width:180px;">Rated Material Number:</label>
+            <span id="keb-rated-matno-result"></span><br>
+            <label style="display:inline-block; width:180px;">CMAT Type Code:</label>
+            <span id="keb-cmat-type-code-result"></span><br>
+            <label style="display:inline-block; width:180px;">Configurable Options:</label>
+            <span id="keb-configurable-options-result"></span>
+        </aside>
+    </div>
     <script>
-        const input = document.getElementById('brusatori-mat-no');
-        const resultDiv = document.getElementById('code-result');
-        const ratedMatNoDiv = document.getElementById('rated-matno-result');
-        const cmatTypeCodeDiv = document.getElementById('cmat-type-code-result');
-        const configurableOptionsDiv = document.getElementById('configurable-options-result');
-        const checkboxesContainer = document.getElementById('checkboxes-container');
-        const withfeatherkey = document.getElementById('withfeatherkey');
-        const withbrake = document.getElementById('withbrake');
-        const encoder = document.getElementById('encoder');
-        const additionaloptions = document.getElementById('additionaloptions');
+    // Brusatori
+    const brusatoriInput = document.getElementById('brusatori-identifier');
+    const brusatoriResultDiv = document.getElementById('brusatori-code-result');
+    const brusatoriRatedMatNoDiv = document.getElementById('brusatori-rated-matno-result');
+    const brusatoriCmatTypeCodeDiv = document.getElementById('brusatori-cmat-type-code-result');
+    const brusatoriConfigurableOptionsDiv = document.getElementById('brusatori-configurable-options-result');
+    const brusatoriCheckboxesContainer = document.getElementById('brusatori-checkboxes-container');
+    const brusatoriWithfeatherkey = document.getElementById('brusatori-withfeatherkey');
+    const brusatoriWithbrake = document.getElementById('brusatori-withbrake');
+    const brusatoriEncoder = document.getElementById('brusatori-encoder');
+    const brusatoriAdditionaloptions = document.getElementById('brusatori-additionaloptions');
 
-        function updateOutputs() {
-            const matNo = input.value;
-            const identifier = getIdentifier(matNo);
+    function updateBrusatoriOutputs() {
+        const matNo = brusatoriInput.value;
+        const identifier = getIdentifierBrusatori(matNo);
 
-            // Show checkboxes if input is not empty
-            checkboxesContainer.style.display = matNo ? "block" : "none";
+        // Show checkboxes if input is not empty
+        brusatoriCheckboxesContainer.style.display = matNo ? "block" : "none";
 
-            if (identifier === "NOT VALID") {
-                resultDiv.textContent = "NOT VALID";
-                ratedMatNoDiv.textContent = "";
-                cmatTypeCodeDiv.textContent = "";
-                configurableOptionsDiv.textContent = "";
-            } else {
-                resultDiv.textContent = identifier;
-                ratedMatNoDiv.textContent = getRatedMaterialNumber(matNo);
-                cmatTypeCodeDiv.textContent = "00SM000-CMAT";
-                configurableOptionsDiv.textContent = getConfigurableOptions(withfeatherkey, withbrake, encoder,additionaloptions);
-            }
+        if (identifier === "NOT VALID") {
+            brusatoriResultDiv.textContent = "NOT VALID";
+            brusatoriRatedMatNoDiv.textContent = "";
+            brusatoriCmatTypeCodeDiv.textContent = "";
+            brusatoriConfigurableOptionsDiv.textContent = "";
+        } else {
+            brusatoriResultDiv.textContent = identifier;
+            brusatoriRatedMatNoDiv.textContent = getRatedMaterialNumber(matNo);
+            brusatoriCmatTypeCodeDiv.textContent = "00SM000-CMAT";
+            brusatoriConfigurableOptionsDiv.textContent = getConfigurableOptions(
+                "brusatori",
+                brusatoriWithfeatherkey,
+                brusatoriWithbrake,
+                brusatoriEncoder,
+                brusatoriAdditionaloptions
+            );
         }
+    }
 
-        input.addEventListener('input', updateOutputs);
-        withfeatherkey.addEventListener('change', updateOutputs);
-        withbrake.addEventListener('change', updateOutputs);
-        encoder.addEventListener('change', updateOutputs);
-        additionaloptions.addEventListener('change', updateOutputs);
-    </script>
+    brusatoriInput.addEventListener('input', updateBrusatoriOutputs);
+    brusatoriWithfeatherkey.addEventListener('change', updateBrusatoriOutputs);
+    brusatoriWithbrake.addEventListener('change', updateBrusatoriOutputs);
+    brusatoriEncoder.addEventListener('change', updateBrusatoriOutputs);
+    brusatoriAdditionaloptions.addEventListener('change', updateBrusatoriOutputs);
+
+    // KEB
+    //const kebInput = document.getElementById('keb-identifier');
+    const kebModel = document.getElementById('keb-input-model');
+    const kebSize = document.getElementById('keb-input-size');
+    const kebLength = document.getElementById('keb-input-length');
+    const kebCooling = document.getElementById('keb-input-cooling');
+    const kebSpeed = document.getElementById('keb-input-speed');
+    const kebResultDiv = document.getElementById('keb-code-result');
+    const kebRatedMatNoDiv = document.getElementById('keb-rated-matno-result');
+    const kebCmatTypeCodeDiv = document.getElementById('keb-cmat-type-code-result');
+    const kebConfigurableOptionsDiv = document.getElementById('keb-configurable-options-result');
+    const kebCheckboxesContainer = document.getElementById('keb-checkboxes-container');
+    const kebWithfeatherkey = document.getElementById('keb-withfeatherkey');
+    const kebWithbrake = document.getElementById('keb-withbrake');
+    const kebEncoder = document.getElementById('keb-encoder');
+    const kebAdditionaloptions = document.getElementById('keb-additionaloptions');
+
+    function updateKebOutputs() {
+        //const matNo = kebInput.value;
+        const identifier = getIdentifierKEB(
+            kebModel.value,
+            kebSize.value,
+            kebLength.value,
+            kebCooling.value,
+            kebSpeed.value
+        );
+
+        // Show checkboxes if input is not empty
+        kebCheckboxesContainer.style.display =  "block";
+
+        if (identifier === "NOT VALID") {
+            kebResultDiv.textContent = "NOT VALID";
+            kebRatedMatNoDiv.textContent = "";
+            kebCmatTypeCodeDiv.textContent = "";
+            kebConfigurableOptionsDiv.textContent = "";
+        } else {
+            kebResultDiv.textContent = identifier;
+            kebRatedMatNoDiv.textContent = getRatedMaterialNumber(identifier);
+            kebCmatTypeCodeDiv.textContent = "00SM000-CMAT";
+            kebConfigurableOptionsDiv.textContent = getConfigurableOptions(
+                "keb",
+                kebWithfeatherkey,
+                kebWithbrake,
+                kebEncoder,
+                kebAdditionaloptions
+            );
+        }
+    }
+
+    //kebInput.addEventListener('input', updateKebOutputs);
+    kebModel.addEventListener('change', updateKebOutputs);
+    kebSize.addEventListener('change', updateKebOutputs);
+    kebLength.addEventListener('change', updateKebOutputs);
+    kebCooling.addEventListener('change', updateKebOutputs);
+    kebSpeed.addEventListener('change', updateKebOutputs);
+    kebWithfeatherkey.addEventListener('change', updateKebOutputs);
+    kebWithbrake.addEventListener('change', updateKebOutputs);
+    kebEncoder.addEventListener('change', updateKebOutputs);
+    kebAdditionaloptions.addEventListener('change', updateKebOutputs);
+
+    window.addEventListener('DOMContentLoaded', function() {
+        // ...existing code...
+        updateKebOutputs();
+    });
+//     // Add this function to load and parse the CSV, and update the datalist
+// function loadKebSuggestions() {
+//     fetch('dl4motors.csv')
+//         .then(response => response.text())
+//         .then(text => {
+//             const lines = text.split('\n');
+//             const datalist = document.getElementById('keb-identifier-suggestions');
+//             datalist.innerHTML = '';
+//             lines.forEach(line => {
+//                 const value = line.trim();
+//                 if (value) {
+//                     const option = document.createElement('option');
+//                     option.value = value;
+//                     datalist.appendChild(option);
+//                 }
+//             });
+//         });
+// }
+
+// // Call this once on page load
+// window.addEventListener('DOMContentLoaded', loadKebSuggestions);
+     </script>
 </body>
 </html>
